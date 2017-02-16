@@ -10,7 +10,7 @@ import com.loopj.android.http.RequestParams;
 
 public class NetUtil {
     // my main adress is http://mgarebaghi.ir/test/
-    private static final String baseUrl = "http://mgarebaghi.ir/test/api/";
+    private static final String baseUrl = "http://temck.avaw.com/api/";
     public static final int postCount = 6;
     private static AsyncHttpClient client = new AsyncHttpClient();
 
