@@ -2,6 +2,7 @@ package ir.technopedia.wordpressjsonclient;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
@@ -66,10 +67,19 @@ public class DetailActivity extends SwipeBaseActivity {
         String html = htmlifyText(postModel.content);
         webView.loadDataWithBaseURL("file:///android_asset/", html, "text/html", "UTF-8", null);
 
-        Picasso.with(getBaseContext())
-                .load(postModel.img)
-                .placeholder(R.drawable.placeholder)
-                .into(imageView);
+        String thumbnail = null;
+        if (postModel.thumbnail_medium != null) thumbnail = postModel.thumbnail_medium;
+        else if (postModel.thumbnail != null) thumbnail = postModel.thumbnail;
+        if (thumbnail == null) {
+            final AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
+            appBarLayout.setExpanded(false,false);
+        }
+        else {
+            Picasso.with(getBaseContext())
+                    .load(thumbnail)
+                    .placeholder(R.drawable.placeholder)
+                    .into(imageView);
+        }
 
         txtAuthorDate.setText(
                 Html.fromHtml(getString(R.string.written_by) + "<b> " + postModel.author +

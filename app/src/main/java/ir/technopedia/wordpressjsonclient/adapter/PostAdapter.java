@@ -57,8 +57,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.DataObjectHold
             holder.comments.setText(count + "");
         }
 
+        // 显示图片,优先显示thumbnail_medium
+        String thumbnail = null;
+        if (mDataset.get(position).thumbnail_medium != null) thumbnail = mDataset.get(position).thumbnail_medium;
+        else if (mDataset.get(position).thumbnail != null) thumbnail = mDataset.get(position).thumbnail;
+
         Picasso.with(context)
-                .load(mDataset.get(position).img)
+                .load(thumbnail)
                 .placeholder(R.drawable.placeholder)
                 .into(holder.img);
     }

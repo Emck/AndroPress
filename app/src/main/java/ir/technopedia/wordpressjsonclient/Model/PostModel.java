@@ -15,7 +15,7 @@ import java.util.List;
 
 public class PostModel extends SugarRecord {
     public int id, comment_count;
-    public String url, title, content, date, author, comment_status, status, img;
+    public String url, title, content, date, author, comment_status, status, thumbnail, thumbnail_medium;
     public List<String> categories;
     public List<CommentModel> comments;
     public JSONArray categoryjsonlist, commentjsonlist;
@@ -46,7 +46,10 @@ public class PostModel extends SugarRecord {
             }
             comment_count = jsonObject.getInt("comment_count");
             comment_status = jsonObject.getString("comment_status");
-            img = jsonObject.getString("thumbnail");
+            thumbnail = jsonObject.getString("thumbnail");              // 缩略图[150x150]
+            try {
+                thumbnail_medium = jsonObject.getJSONObject("thumbnail_images").getJSONObject("medium").getString("url");   // 缩略图[300x300]
+            } catch (JSONException e) {}
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -80,7 +83,8 @@ public class PostModel extends SugarRecord {
 
             jsonObject.put("comment_count", comment_count);
             jsonObject.put("comment_status", comment_status);
-            jsonObject.put("thumbnail", img);
+            jsonObject.put("thumbnail", thumbnail);
+            jsonObject.put("thumbnail_medium", thumbnail_medium);
         } catch (JSONException e) {
             e.printStackTrace();
         }
