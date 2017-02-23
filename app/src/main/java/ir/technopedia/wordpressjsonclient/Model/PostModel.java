@@ -14,17 +14,33 @@ import java.util.List;
  */
 
 public class PostModel extends SugarRecord {
+    public static final int NO_Thumbnail = 1000;
+    public static final int YES_Thumbnail = 2000;
+
     public int id, comment_count;
     public String url, title, content, date, author, comment_status, status, thumbnail, thumbnail_medium;
     public List<String> categories;
     public List<CommentModel> comments;
     public JSONArray categoryjsonlist, commentjsonlist;
+    private int Type;
 
     public PostModel() {
         id = -1;
         url = title = content = date = author = comment_status = status = "";
         categories = new ArrayList<>();
         comments = new ArrayList<>();
+    }
+
+    public String getThumbnailExt() {
+        // 显示图片,优先显示thumbnail_medium
+        if (thumbnail_medium != null) return thumbnail_medium;
+        else if(thumbnail != null) return thumbnail;
+        else return null;
+    }
+
+    public int getType() {
+        if (getThumbnailExt() == null) return NO_Thumbnail;
+        else return YES_Thumbnail;
     }
 
     public void fromJson(JSONObject jsonObject) {
